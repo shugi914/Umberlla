@@ -1,0 +1,147 @@
+##ERROR I GOT:
+W: GPG error: https://pkg.jenkins.io/debian binary/ Release: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 5BA31D57EF5975CA
+E: The repository 'https://pkg.jenkins.io/debian binary/ Release' is not signed.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Package jenkins is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+
+E: Package 'jenkins' has no installation candidate
+Failed to start jenkins.service: Unit jenkins.service not found.
+Failed to enable unit: Unit file jenkins.service does not exist.
+cat: /var/lib/jenkins/secrets/initialAdminPassword: No such file or directory
+ubuntu@ip-172-31-26-167:~$ sudo systemctl status jenkins
+Unit jenkins.service could not be found.
+ubuntu@ip-172-31-26-167:~$ wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo gpg --dearmor --yes -o /usr/share/keyrings/jenkins-keyring.gpg
+ubuntu@ip-172-31-26-167:~$ sudo nano /etc/apt/sources.list.d/jenkins.list
+##Replace the line deb https://pkg.jenkins.io/debian binary/ with the following :
+deb [signed-by=/usr/share/keyrings/jenkins-keyring.gpg] https://pkg.jenkins.io/debian binary/
+
+ubuntu@ip-172-31-26-167:~$ sudo apt update
+Hit:1 http://us-west-2.ec2.archive.ubuntu.com/ubuntu jammy InRelease
+Hit:2 http://us-west-2.ec2.archive.ubuntu.com/ubuntu jammy-updates InRelease                   
+Hit:3 http://us-west-2.ec2.archive.ubuntu.com/ubuntu jammy-backports InRelease                 
+Ign:4 https://pkg.jenkins.io/debian binary/ InRelease                                          
+Get:5 https://pkg.jenkins.io/debian binary/ Release [2044 B]                                   
+Get:6 https://pkg.jenkins.io/debian binary/ Release.gpg [833 B]                                
+Hit:7 http://security.ubuntu.com/ubuntu jammy-security InRelease                               
+Ign:6 https://pkg.jenkins.io/debian binary/ Release.gpg                          
+Hit:8 https://ppa.launchpadcontent.net/ansible/ansible/ubuntu jammy InRelease
+Reading package lists... Done
+W: GPG error: https://pkg.jenkins.io/debian binary/ Release: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 5BA31D57EF5975CA
+E: The repository 'https://pkg.jenkins.io/debian binary/ Release' is not signed.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+ubuntu@ip-172-31-26-167:~$ sudo apt install -y jenkins
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Package jenkins is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+
+E: Package 'jenkins' has no installation candidate
+ubuntu@ip-172-31-26-167:~$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5BA31D57EF5975CA
+Warning: apt-key is deprecated. Manage keyring files in trusted.gpg.d instead (see apt-key(8)).
+Executing: /tmp/apt-key-gpghome.Ayb7ilOWYP/gpg.1.sh --keyserver keyserver.ubuntu.com --recv-keys 5BA31D57EF5975CA
+gpg: key 5BA31D57EF5975CA: public key "Jenkins Project <jenkinsci-board@googlegroups.com>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+ubuntu@ip-172-31-26-167:~$ sudo apt install -y jenkins
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Package jenkins is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+
+E: Package 'jenkins' has no installation candidate
+ubuntu@ip-172-31-26-167:~$ wget https://pkg.jenkins.io/debian-stable/binary/jenkins_2.319.1_all.deb
+--2023-05-22 22:44:24--  https://pkg.jenkins.io/debian-stable/binary/jenkins_2.319.1_all.deb
+Resolving pkg.jenkins.io (pkg.jenkins.io)... 146.75.42.133, 2a04:4e42:7a::645
+Connecting to pkg.jenkins.io (pkg.jenkins.io)|146.75.42.133|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://mirrors.jenkins.io/debian-stable/jenkins_2.319.1_all.deb [following]
+--2023-05-22 22:44:25--  https://mirrors.jenkins.io/debian-stable/jenkins_2.319.1_all.deb
+Resolving mirrors.jenkins.io (mirrors.jenkins.io)... 52.167.253.43
+Connecting to mirrors.jenkins.io (mirrors.jenkins.io)|52.167.253.43|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://archives.jenkins.io/debian-stable/jenkins_2.319.1_all.deb [following]
+--2023-05-22 22:44:25--  https://archives.jenkins.io/debian-stable/jenkins_2.319.1_all.deb
+Resolving archives.jenkins.io (archives.jenkins.io)... 129.146.98.132
+Connecting to archives.jenkins.io (archives.jenkins.io)|129.146.98.132|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 71806860 (68M) [application/x-debian-package]
+Saving to: ‘jenkins_2.319.1_all.deb’
+
+jenkins_2.319.1_all.deb 100%[===============================>]  68.48M  19.8MB/s    in 3.7s    
+
+2023-05-22 22:44:29 (18.6 MB/s) - ‘jenkins_2.319.1_all.deb’ saved [71806860/71806860]
+
+ubuntu@ip-172-31-26-167:~$ sudo dpkg -i jenkins_2.319.1_all.deb
+Selecting previously unselected package jenkins.
+(Reading database ... 112471 files and directories currently installed.)
+Preparing to unpack jenkins_2.319.1_all.deb ...
+Unpacking jenkins (2.319.1) ...
+dpkg: dependency problems prevent configuration of jenkins:
+ jenkins depends on daemon; however:
+  Package daemon is not installed.
+ jenkins depends on net-tools; however:
+  Package net-tools is not installed.
+
+dpkg: error processing package jenkins (--install):
+ dependency problems - leaving unconfigured
+Errors were encountered while processing:
+ jenkins
+ubuntu@ip-172-31-26-167:~$ sudo apt-get install -f
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Correcting dependencies... Done
+The following additional packages will be installed:
+  daemon net-tools
+The following NEW packages will be installed:
+  daemon net-tools
+0 upgraded, 2 newly installed, 0 to remove and 5 not upgraded.
+1 not fully installed or removed.
+Need to get 265 kB of archives.
+After this operation, 980 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://us-west-2.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 daemon amd64 0.8-1 [60.9 kB]
+Get:2 http://us-west-2.ec2.archive.ubuntu.com/ubuntu jammy/main amd64 net-tools amd64 1.60+git20181103.0eebece-1ubuntu5 [204 kB]
+Fetched 265 kB in 0s (1142 kB/s)
+Selecting previously unselected package daemon.
+(Reading database ... 112482 files and directories currently installed.)
+Preparing to unpack .../daemon_0.8-1_amd64.deb ...
+Unpacking daemon (0.8-1) ...
+Selecting previously unselected package net-tools.
+Preparing to unpack .../net-tools_1.60+git20181103.0eebece-1ubuntu5_amd64.deb ...
+Unpacking net-tools (1.60+git20181103.0eebece-1ubuntu5) ...
+Setting up net-tools (1.60+git20181103.0eebece-1ubuntu5) ...
+Setting up daemon (0.8-1) ...
+Setting up jenkins (2.319.1) ...
+Processing triggers for man-db (2.10.2-1) ...
+needrestart is being skipped since dpkg has failed
+ubuntu@ip-172-31-26-167:~$ sudo apt-get install -f
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+0 upgraded, 0 newly installed, 0 to remove and 5 not upgraded.
+ubuntu@ip-172-31-26-167:~$ sudo dpkg -i jenkins_2.319.1_all.deb
+(Reading database ... 112540 files and directories currently installed.)
+Preparing to unpack jenkins_2.319.1_all.deb ...
+Unpacking jenkins (2.319.1) over (2.319.1) ...
+Setting up jenkins (2.319.1) ...
+ubuntu@ip-172-31-26-167:~$ sudo apt install -y jenkins
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+jenkins is already the newest version (2.319.1).
+0 upgraded, 0 newly installed, 0 to remove and 5 not upgraded.
+ubuntu@ip-172-31-26-167:~$ sudo systemctl status jenkins
+● jenkins.service - LSB: Start Jenkins at boot time
+
