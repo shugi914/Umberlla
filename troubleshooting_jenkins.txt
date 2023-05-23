@@ -9,19 +9,23 @@ Reading state information... Done
 Package jenkins is not available, but is referred to by another package.
 This may mean that the package is missing, has been obsoleted, or
 is only available from another source
-
 E: Package 'jenkins' has no installation candidate
 Failed to start jenkins.service: Unit jenkins.service not found.
 Failed to enable unit: Unit file jenkins.service does not exist.
 cat: /var/lib/jenkins/secrets/initialAdminPassword: No such file or directory
+
 ubuntu@ip-172-31-26-167:~$ sudo systemctl status jenkins
+
 Unit jenkins.service could not be found.
+
 ubuntu@ip-172-31-26-167:~$ wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo gpg --dearmor --yes -o /usr/share/keyrings/jenkins-keyring.gpg
+
 ubuntu@ip-172-31-26-167:~$ sudo nano /etc/apt/sources.list.d/jenkins.list
 ##Replace the line deb https://pkg.jenkins.io/debian binary/ with the following :
 deb [signed-by=/usr/share/keyrings/jenkins-keyring.gpg] https://pkg.jenkins.io/debian binary/
 
 ubuntu@ip-172-31-26-167:~$ sudo apt update
+
 Hit:1 http://us-west-2.ec2.archive.ubuntu.com/ubuntu jammy InRelease
 Hit:2 http://us-west-2.ec2.archive.ubuntu.com/ubuntu jammy-updates InRelease                   
 Hit:3 http://us-west-2.ec2.archive.ubuntu.com/ubuntu jammy-backports InRelease                 
@@ -36,7 +40,9 @@ W: GPG error: https://pkg.jenkins.io/debian binary/ Release: The following signa
 E: The repository 'https://pkg.jenkins.io/debian binary/ Release' is not signed.
 N: Updating from such a repository can't be done securely, and is therefore disabled by default.
 N: See apt-secure(8) manpage for repository creation and user configuration details.
+
 ubuntu@ip-172-31-26-167:~$ sudo apt install -y jenkins
+
 Reading package lists... Done
 Building dependency tree... Done
 Reading state information... Done
@@ -45,13 +51,17 @@ This may mean that the package is missing, has been obsoleted, or
 is only available from another source
 
 E: Package 'jenkins' has no installation candidate
+
 ubuntu@ip-172-31-26-167:~$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5BA31D57EF5975CA
+
 Warning: apt-key is deprecated. Manage keyring files in trusted.gpg.d instead (see apt-key(8)).
 Executing: /tmp/apt-key-gpghome.Ayb7ilOWYP/gpg.1.sh --keyserver keyserver.ubuntu.com --recv-keys 5BA31D57EF5975CA
 gpg: key 5BA31D57EF5975CA: public key "Jenkins Project <jenkinsci-board@googlegroups.com>" imported
 gpg: Total number processed: 1
 gpg:               imported: 1
+
 ubuntu@ip-172-31-26-167:~$ sudo apt install -y jenkins
+
 Reading package lists... Done
 Building dependency tree... Done
 Reading state information... Done
@@ -60,7 +70,9 @@ This may mean that the package is missing, has been obsoleted, or
 is only available from another source
 
 E: Package 'jenkins' has no installation candidate
+
 ubuntu@ip-172-31-26-167:~$ wget https://pkg.jenkins.io/debian-stable/binary/jenkins_2.319.1_all.deb
+
 --2023-05-22 22:44:24--  https://pkg.jenkins.io/debian-stable/binary/jenkins_2.319.1_all.deb
 Resolving pkg.jenkins.io (pkg.jenkins.io)... 146.75.42.133, 2a04:4e42:7a::645
 Connecting to pkg.jenkins.io (pkg.jenkins.io)|146.75.42.133|:443... connected.
@@ -83,6 +95,7 @@ jenkins_2.319.1_all.deb 100%[===============================>]  68.48M  19.8MB/s
 2023-05-22 22:44:29 (18.6 MB/s) - ‘jenkins_2.319.1_all.deb’ saved [71806860/71806860]
 
 ubuntu@ip-172-31-26-167:~$ sudo dpkg -i jenkins_2.319.1_all.deb
+
 Selecting previously unselected package jenkins.
 (Reading database ... 112471 files and directories currently installed.)
 Preparing to unpack jenkins_2.319.1_all.deb ...
@@ -97,7 +110,9 @@ dpkg: error processing package jenkins (--install):
  dependency problems - leaving unconfigured
 Errors were encountered while processing:
  jenkins
+ 
 ubuntu@ip-172-31-26-167:~$ sudo apt-get install -f
+
 Reading package lists... Done
 Building dependency tree... Done
 Reading state information... Done
@@ -126,12 +141,16 @@ Setting up daemon (0.8-1) ...
 Setting up jenkins (2.319.1) ...
 Processing triggers for man-db (2.10.2-1) ...
 needrestart is being skipped since dpkg has failed
+
 ubuntu@ip-172-31-26-167:~$ sudo apt-get install -f
+
 Reading package lists... Done
 Building dependency tree... Done
 Reading state information... Done
 0 upgraded, 0 newly installed, 0 to remove and 5 not upgraded.
+
 ubuntu@ip-172-31-26-167:~$ sudo dpkg -i jenkins_2.319.1_all.deb
+
 (Reading database ... 112540 files and directories currently installed.)
 Preparing to unpack jenkins_2.319.1_all.deb ...
 Unpacking jenkins (2.319.1) over (2.319.1) ...
