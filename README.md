@@ -1,5 +1,9 @@
-# Umberlla Project - small Devops practice
+# Umberlla Project - Small Devops Practice
 # DevOps Practice Project
+**This project was made by:**
+
+
+LIOR MATANA and SHAI LEVI
 
 This project is a small DevOps practice project that combines various tools and technologies to set up a complete CI/CD pipeline. It utilizes Terraform, Packer, Git, Ansible, and Jenkins to automate infrastructure provisioning, application deployment, and continuous integration.
 
